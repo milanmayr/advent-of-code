@@ -7,8 +7,10 @@ import (
 )
 
 func main() {
-	print("The first start-of-packet marker appears at position: ")
+	print("The first start-of-packet marker ends at position: ")
 	println(firstStartOfPacketMarkerPosition())
+	print("The first start-of-message marker ends at position: ")
+	println(firstStartOfMessageMarkerPosition())
 }
 
 func firstStartOfPacketMarkerPosition() (position int) {
@@ -22,6 +24,29 @@ func firstStartOfPacketMarkerPosition() (position int) {
 	potentialMarker := datastream[0:4]
 	
 	for char := 4; char < len(datastream)-1; char++ {
+		if !isMarkerUnique(potentialMarker) {
+			potentialMarker = potentialMarker[1:]
+			potentialMarker = append(potentialMarker, datastream[char])
+		} else {
+			position = char
+			break
+		}
+	}
+
+	return position
+}
+
+func firstStartOfMessageMarkerPosition() (position int) {
+	input := utils.GetInput("input")
+	// input only has one line
+	datastream := strings.Split(input[0], "")
+
+	// start of a packet is indicated by four characters that are different
+	// get position of character that ends the first start-of-packet marker
+
+	potentialMarker := datastream[0:14]
+	
+	for char := 14; char < len(datastream)-1; char++ {
 		if !isMarkerUnique(potentialMarker) {
 			potentialMarker = potentialMarker[1:]
 			potentialMarker = append(potentialMarker, datastream[char])
