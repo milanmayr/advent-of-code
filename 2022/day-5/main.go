@@ -72,8 +72,6 @@ func topCratesPartTwo() (topCrates string) {
 }
 
 func getStacks() (stacks [][]string) {
-	// get first 9 lines and split into 9 queues
-	// create the moving algorithm
 	input := utils.GetInput("input")
 
 	// Create set of arrays representing stacks
