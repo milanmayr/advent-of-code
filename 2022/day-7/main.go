@@ -15,6 +15,8 @@ const explanation = "AKA your code is broken."
 func main() {
 	print("The sum of the total sizes of those directories that are at most 100,000 large is: ")
 	println(totalSizeOfDirectoriesUnderOneHundredThousand())
+	print("The total size of the smallest directory that would free up enough space is: ")
+	println(totalSizeOfDirectoryToDelete())
 }
 
 // Represents a directory
@@ -33,6 +35,18 @@ func totalSizeOfDirectoriesUnderOneHundredThousand() int {
 	directorySizes(&filesystem, &sum)
 
 	return sum
+}
+
+func totalSizeOfDirectoryToDelete() (result int) {
+	input := utils.GetInput("input")
+	filesystem := createFilesystem(input[1:])
+	var sum int
+	directorySizes(&filesystem, &sum)
+	currentUnused := 70000000 - filesystem.Size
+	targetDelete := 30000000 - currentUnused
+	var deleteDirSize int
+	targetDirectoryForDeletion(&filesystem, targetDelete, &deleteDirSize)
+	return deleteDirSize
 }
 
 // Checks if line is a command
@@ -133,3 +147,26 @@ func directorySizes(dir *Directory, sum *int) {
 		*sum += dir.Size
 	}
 }
+
+func targetDirectoryForDeletion(dir *Directory, targetSize int, result *int) {
+	if *result == 0 {
+		*result = dir.Size
+	} else if dir.Size >= targetSize && dir.Size < *result {
+		*result = dir.Size
+	}
+	if len(dir.Subdirectories) > 0 {
+		for _, subdir := range dir.Subdirectories {
+			targetDirectoryForDeletion(subdir, targetSize, result)
+		}
+	}
+}
+
+// func targetDirectoryForDeletion(dir *Directory, size *int, targetSize int) {
+// 	if len(dir.Subdirectories) > 0 {
+// 		for _, subdir := range dir.Subdirectories {
+// 			if (subdir.Size >= targetSize) && (subdir.Size < *size) {
+// 				*size = subdir.Size
+// 			}
+// 		}
+// 	}
+// }
