@@ -130,40 +130,53 @@ func positionsTailWith10KnotsVisited() (positions int) {
 
 			// 2. move all knots behind head
 			for i := 1; i <= 9; i++ {
-				headOfCurrentKnot := rope[i-1]
-				deltaX := int(math.Abs(float64(headOfCurrentKnot.X - tail.X)))
-				deltaY := int(math.Abs(float64(headOfCurrentKnot.Y - tail.Y)))
+				knot := &rope[i]
+				headOfCurrentKnot := &rope[i-1]
+				deltaX := int(math.Abs(float64(headOfCurrentKnot.X - knot.X)))
+				deltaY := int(math.Abs(float64(headOfCurrentKnot.Y - knot.Y)))
 				if deltaX > 1 || deltaY > 1 {
 					if deltaY == 0 {
-						if headOfCurrentKnot.X < tail.X {
-							tail.X = headOfCurrentKnot.X + 1
+						if headOfCurrentKnot.X < knot.X {
+							knot.X = headOfCurrentKnot.X + 1
 						} else {
-							tail.X = headOfCurrentKnot.X - 1
+							knot.X = headOfCurrentKnot.X - 1
 						}
 					} else if deltaX == 0 {
-						if headOfCurrentKnot.Y < tail.Y {
-							tail.Y = headOfCurrentKnot.Y + 1
+						if headOfCurrentKnot.Y < knot.Y {
+							knot.Y = headOfCurrentKnot.Y + 1
 						} else {
-							tail.Y = headOfCurrentKnot.Y - 1
+							knot.Y = headOfCurrentKnot.Y - 1
+						}
+					} else if deltaX == 2 && deltaY == 2 {
+						if headOfCurrentKnot.Y < knot.Y {
+							knot.Y--
+						} else {
+							knot.Y++
+						}
+						if headOfCurrentKnot.X < knot.X {
+							knot.X--
+						} else {
+							knot.X++
 						}
 					} else if deltaY == 2 {
-						if headOfCurrentKnot.Y < tail.Y {
-							tail.Y = headOfCurrentKnot.Y + 1
+						if headOfCurrentKnot.Y < knot.Y {
+							knot.Y = headOfCurrentKnot.Y + 1
 						} else {
-							tail.Y = headOfCurrentKnot.Y - 1
+							knot.Y = headOfCurrentKnot.Y - 1
 						}
-						tail.X = headOfCurrentKnot.X
+						knot.X = headOfCurrentKnot.X
 					} else if deltaX == 2 {
-						if headOfCurrentKnot.X < tail.X {
-							tail.X = headOfCurrentKnot.X + 1
+						if headOfCurrentKnot.X < knot.X {
+							knot.X = headOfCurrentKnot.X + 1
 						} else {
-							tail.X = headOfCurrentKnot.X - 1
+							knot.X = headOfCurrentKnot.X - 1
 						}
-						tail.Y = headOfCurrentKnot.Y
+						knot.Y = headOfCurrentKnot.Y
 					}
-					positionsVisitedByTail[*tail] = true
 				}
+				
 			}
+			positionsVisitedByTail[*tail] = true
 		}
 
 	}
