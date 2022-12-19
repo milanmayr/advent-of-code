@@ -55,24 +55,42 @@ func positionsTailVisited() (positions int) {
 			case "D":
 				head.Y--
 			}
-			
+
 			// 2. move tail
-			deltaX := int(math.Abs(float64(head.X-tail.X)))
-			deltaY := int(math.Abs(float64(head.Y-tail.Y)))
+			deltaX := int(math.Abs(float64(head.X - tail.X)))
+			deltaY := int(math.Abs(float64(head.Y - tail.Y)))
 			if deltaX > 1 || deltaY > 1 {
 				if deltaY == 0 {
-					tail.X = head.X - 1
+					if head.X < tail.X {
+						tail.X = head.X + 1
+					} else {
+						tail.X = head.X - 1
+					}
 				} else if deltaX == 0 {
-					tail.Y = head.Y - 1
+					if head.Y < tail.Y {
+						tail.Y = head.Y + 1
+					} else {
+						tail.Y = head.Y - 1
+					}
 				} else if deltaY == 2 {
+					if head.Y < tail.Y {
+						tail.Y = head.Y + 1
+					} else {
+						tail.Y = head.Y - 1
+					}
 					tail.Y = head.Y - 1
 					tail.X = head.X
 				} else if deltaX == 2 {
-					tail.X = head.X -1
+					if head.X < tail.X {
+						tail.X = head.X + 1
+					} else {
+						tail.X = head.X - 1
+					}
 					tail.Y = head.Y
 				}
 				positionsVisitedByTail[*tail] = true
-			}}
+			}
+		}
 
 	}
 	return len(positionsVisitedByTail)
