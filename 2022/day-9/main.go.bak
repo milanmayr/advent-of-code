@@ -1,0 +1,99 @@
+package main
+
+import (
+	"math"
+	"strconv"
+
+	"github.com/milanmayr/advent-of-code/2022/utils"
+)
+
+// as long as delta of x - x and y - y is 1 or less, the head and tail are good
+// if head is two steps up down left or right, tail moves one step in same direction
+// if head and tail aren't touching and aren't in same row or column, tail moves one step diagonally to keep up
+//
+
+func main() {
+	print("The tail of the rope visited ")
+	print(positionsTailVisited())
+	print(" positions at least once.")
+}
+
+type position struct {
+	X int
+	Y int
+}
+
+func positionsTailVisited() (positions int) {
+
+	input := utils.GetInput("example-input")
+	// initial position of head and tail is 0,0
+	tail := &position{
+		X: 1,
+		Y: 1,
+	}
+	head := &position{
+		X: 1,
+		Y: 1,
+	}
+
+	positionsVisitedByTail := make(map[position]bool, 0)
+	positionsVisitedByTail[position{X: 1, Y: 1}] = true
+
+	for _, line := range input {
+		direction := line[:1]
+		distance, _ := strconv.Atoi(line[2:])
+
+		switch direction {
+		case "L":
+			// for i := 1; i <= distance; i++ {
+			// 	head.X--
+			// 	if shouldMoveTail(rope) {
+			// 		tail.X--
+			// 		positionsVisitedByTail[rope.Tail] = true
+			// 	}
+			// }
+			// move head one position
+			// check tail position
+			// move tail if necessary
+		case "U":
+			for i := 1; i < distance; i++ {
+				// move head up one position
+				head.Y++
+				// if head and tail are on the same X axis, also move tail up one position
+				if head.X == tail.X {
+					tail.Y++
+				} else if int(math.Abs(float64(head.X-tail.X))) > 1 || int(math.Abs(float64(head.Y-tail.Y))) > 1 { // if tail is on a different X axis and is more than one square away diagonally, move tail
+					tail.Y++
+					tail.X++
+				}
+				positionsVisitedByTail[*tail] = true
+			}
+		case "R":
+			for i := 1; i <= distance; i++ {
+				// move head right one position
+				head.X++
+				// if head and tail are on the same X axis, also move tail right one position
+				if head.Y == tail.Y && int(math.Abs(float64(head.X-tail.X))) > 1 {
+					tail.X++
+				} else if int(math.Abs(float64(head.X-tail.X))) > 1 || int(math.Abs(float64(head.Y-tail.Y))) > 1 { // if tail is on a different X axis and is more than one square away diagonally, move tail
+					tail.Y++
+					tail.X++
+				}
+				positionsVisitedByTail[*tail] = true
+			}
+		case "D":
+			//
+		}
+
+	}
+
+	return len(positionsVisitedByTail)
+}
+
+// func shouldMoveTail(head *position, tail *position) bool {
+// 	if int(math.Abs(float64(rope.Head.X-rope.Tail.X))) > 1 || int(math.Abs(float64(rope.Head.Y-rope.Tail.Y))) > 1 {
+// 		return true
+// 	} else {
+// 		return false
+// 	}
+// }
