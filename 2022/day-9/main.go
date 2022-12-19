@@ -78,7 +78,6 @@ func positionsTailVisited() (positions int) {
 					} else {
 						tail.Y = head.Y - 1
 					}
-					tail.Y = head.Y - 1
 					tail.X = head.X
 				} else if deltaX == 2 {
 					if head.X < tail.X {
