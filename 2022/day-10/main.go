@@ -11,7 +11,9 @@ func main() {
 	sum := sumOfSixSignalStrengths()
 	print("The sum of all six signal strengths is ")
 	println(sum)
+	println()
 
+	println("Part two: ")
 	partTwo()
 }
 
