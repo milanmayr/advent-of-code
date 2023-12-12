@@ -27,6 +27,16 @@ func main() {
 		}
 	}
 	fmt.Printf("The sum of possible Game IDs is %d\n", sumOfPossibleGameIds)
+
+	// Part 2
+	var sumOfSetPowers int
+	for _, line := range games {
+		_, sets := parseLine(line)
+			minimumCubes := minimumCubes(sets)
+			sumOfSetPowers += setPower(minimumCubes)
+	}
+
+	fmt.Printf("The sum of the power of minimum sets for each game is %d\n", sumOfSetPowers)
 }
 
 type colorSet struct {
@@ -73,7 +83,7 @@ func parseLine(line string) (gameId int, sets []colorSet) {
 	return 
 }
 
-// which games would have been possible if the bag contained only 12 red cubes, 13 green cubes, and 14 blue cubes?
+// If the bag contained only 12 red cubes, 13 green cubes, and 14 blue cubes, would the set be possible?
 func setPossible(set colorSet) bool {
 	if set.Red > 12 {
 		return false
@@ -85,4 +95,34 @@ func setPossible(set colorSet) bool {
 		return false
 	}
 	return true
+}
+
+// return minimum colorSet for a game
+func minimumCubes(game []colorSet) (minimumCubes colorSet) {
+	var red int
+	var green int
+	var blue int
+
+	for _, set := range game {
+		if set.Red > red {
+			red = set.Red
+		}
+		if set.Green > green {
+			green = set.Green
+		}
+		if set.Blue > blue {
+			blue = set.Blue
+		}
+	}
+	minimumCubes = colorSet{
+		Red: red,
+		Green: green,
+		Blue: blue,
+	}
+	return minimumCubes
+}
+
+// return the power of a set
+func setPower(set colorSet) int {
+	return set.Blue * set.Red * set.Green
 }
