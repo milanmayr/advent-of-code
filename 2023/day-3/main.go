@@ -28,9 +28,6 @@ func main() {
 	for y, line := range engineSchematic {
 		var partNumber partNumber
 		for x := 0; x < len(line); x++ {
-			if y == 127 && x == 139 {
-				print("debug")
-			}
 			if unicode.IsDigit(rune(line[x])) {
 				location := schematicLocation{
 					x: x,
