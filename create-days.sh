@@ -3,28 +3,29 @@
 for i in $(seq 1 25)
 do
 
-mkdir day-$i
-touch day-$i/README.md
-touch day-$i/go.mod
-touch day-$i/main.go
-touch day-$i/input
+    mkdir 2024
+    mkdir 2024/day-$i
+    touch 2024/day-$i/README.md
+    touch 2024/day-$i/go.mod
+    touch 2024/day-$i/main.go
+    touch 2024/day-$i/input
 
-echo "## Problem
-https://adventofcode.com/2024/day/$i
-" > day-$i/README.md
+    echo "## Problem
+    https://adventofcode.com/2024/day/$i
+    " > 2024/day-$i/README.md
 
-echo "module github.com/milanmayr/advent-of-code/2024/day-$i
+    echo "module github.com/milanmayr/advent-of-code/2024/day-$i
 
-go 1.23" > day-$i/go.mod
+    go 1.23" > 2024/day-$i/go.mod
 
-echo "package main
+    echo "package main
 
-import (
+    import (
 
-)
+    )
 
-func main() {
-	
-}" > day-$i/main.go
+    func main() {
+        
+    }" > 2024/day-$i/main.go
 
 done
