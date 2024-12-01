@@ -16,16 +16,16 @@ do
 
     echo "module github.com/milanmayr/advent-of-code/2024/day-$i
 
-    go 1.23" > 2024/day-$i/go.mod
+go 1.23" > 2024/day-$i/go.mod
 
     echo "package main
 
-    import (
+import (
 
-    )
+)
 
-    func main() {
+func main() {
         
-    }" > 2024/day-$i/main.go
+}" > 2024/day-$i/main.go
 
 done
