@@ -10,12 +10,12 @@ touch day-$i/main.go
 touch day-$i/input
 
 echo "## Problem
-https://adventofcode.com/2023/day/$i
+https://adventofcode.com/2024/day/$i
 " > day-$i/README.md
 
-echo "module github.com/milanmayr/advent-of-code/2023/day-$i
+echo "module github.com/milanmayr/advent-of-code/2024/day-$i
 
-go 1.21" > day-$i/go.mod
+go 1.23" > day-$i/go.mod
 
 echo "package main
 
