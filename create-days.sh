@@ -1,31 +1,64 @@
-# Populates folder structure for a year's challenge
+#!/bin/bash
 
-for i in $(seq 1 25)
-do
+# Initialize variables with default empty values
+year=""
+day=""
 
-    mkdir 2024
-    mkdir 2024/day-$i
-    touch 2024/day-$i/README.md
-    touch 2024/day-$i/go.mod
-    touch 2024/day-$i/main.go
-    touch 2024/day-$i/input
+# Parse named parameters
+while [[ $# -gt 0 ]]; do
+    case $1 in
+        --year)
+            year="$2"
+            shift 2
+            ;;
+        --day)
+            day="$2"
+            shift 2
+            ;;
+        *)
+            echo "Unknown parameter: $1"
+            exit 1
+            ;;
+    esac
+done
 
-    echo "## Problem
-    https://adventofcode.com/2024/day/$i
-    " > 2024/day-$i/README.md
+# Validate parameters
+if [ -z "$year" ] || [ -z "$day" ]; then
+    echo "Usage: $0 --year <year> --day <day>"
+    echo "Example: $0 --year 2024 --day 1"
+    exit 1
+fi
 
-    echo "module github.com/milanmayr/advent-of-code/2024/day-$i
+# Create directory structure
+mkdir -p $year/day-$day
+touch $year/day-$day/README.md
+touch $year/day-$day/go.mod
+touch $year/day-$day/main.go
+touch $year/day-$day/input
 
-go 1.23" > 2024/day-$i/go.mod
+# Create README.md content
+echo "## Problem
+https://adventofcode.com/$year/day/$day" > $year/day-$day/README.md
 
-    echo "package main
+# Create go.mod content
+echo "module github.com/milanmayr/advent-of-code/$year/day-$day
+
+go 1.23" > $year/day-$day/go.mod
+
+# Create main.go content
+echo "package main
 
 import (
 
 )
 
 func main() {
-        
-}" > 2024/day-$i/main.go
+    
+}" > $year/day-$day/main.go
 
-done
+# Add directory to go.work file
+if [ -f "go.work" ]; then
+    go work use $year/day-$day
+else
+    go work init $year/day-$day
+fi
