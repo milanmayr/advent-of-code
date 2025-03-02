@@ -34,5 +34,12 @@ func IndexOf(element string, data []string) (int, error) {
 			return k, nil
 		}
 	}
-	return 0, errors.New("element not found in string array")    // value not found
- }
+	return 0, errors.New("element not found in string array") // value not found
+}
+
+func AbsoluteDifferenceInt(x, y int) int {
+	if x < y {
+		return y - x
+	}
+	return x - y
+}
