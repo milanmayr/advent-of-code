@@ -40,7 +40,6 @@ func parseLocationIDLists() listsOfLocationIDs {
 	}
 
 	return lists
-
 }
 
 func totalDistanceBetweenBothLists() int {
@@ -91,7 +90,7 @@ func calculateOccurrences(lists listsOfLocationIDs) numberOccurrences {
 	fl := lists.firstList
 	sl := lists.secondList
 
-	// // remove duplicates from first list 
+	// // remove duplicates from first list
 	// for i, v := range fl {
 	// 	if i == len(fl) - 1 {break}
 	// 	if v == fl[i + 1] {
@@ -120,4 +119,3 @@ func absDiffInt(x, y int) int {
 	}
 	return x - y
 }
-
