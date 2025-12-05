@@ -43,3 +43,10 @@ func AbsoluteDifferenceInt(x, y int) int {
 	}
 	return x - y
 }
+
+func AbsoluteInteger(x int) int {
+	if x < 0 {
+		return -x
+	}
+	return x
+}
